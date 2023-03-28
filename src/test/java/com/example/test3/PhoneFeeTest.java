@@ -13,7 +13,7 @@ public class PhoneFeeTest {
     @DisplayName(value = "话费等价类测试1")
     @ParameterizedTest
     @CsvFileSource(resources = "/话费等价类测试.csv", numLinesToSkip = 1, encoding = "UTF-8")
-    void main(int m,String Date1, String Date2, double expected) throws ParseException {
+    void main(String Date1, String Date2, double expected) throws ParseException {
 //        PhoneFee p1 = new PhoneFee();
 //        long CountTime1=p1.CountTime(fromDate,toDate);
 //        double money= p1.CountMoney(CountTime1);
@@ -23,6 +23,7 @@ public class PhoneFeeTest {
 
         long minutes = p1.CountTime(Date2,Date1);
         double money = p1.CountMoney(minutes);
-        assertEquals(expected, money,minutes);
+        System.out.println("通话时间为："+minutes+"分钟");
+        assertEquals(expected,money);
     }
 }

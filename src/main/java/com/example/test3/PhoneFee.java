@@ -9,7 +9,7 @@ import java.util.*;
 public class PhoneFee {
     //计算时间的函数
     public long CountTime(String Date1, String Date2) throws ParseException {
-        SimpleDateFormat simpleFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date fromDate = simpleFormat1.parse(Date1);
         Date toDate = simpleFormat1.parse(Date2);
@@ -19,7 +19,7 @@ public class PhoneFee {
         Calendar tocal = Calendar.getInstance();
         tocal.setTime(toDate);
 
-        long PhoneTime = fromcal.getTime().getTime() - tocal.getTime().getTime();
+        long PhoneTime = fromcal.getTime().getTime()- tocal.getTime().getTime();
         long minutes;
 
         if(PhoneTime>=0 && PhoneTime/1000<60 || PhoneTime%60000>0) //不到一分钟按一分钟计算
@@ -28,7 +28,7 @@ public class PhoneFee {
             minutes = PhoneTime/1000/60;
 
 
-        if(fromcal.get(Calendar.MONTH) == Calendar.OCTOBER && fromcal.get(Calendar.DATE) >= 25 && fromcal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+        if(fromcal.get(Calendar.MONTH) == Calendar.NOVEMBER && fromcal.get(Calendar.DATE) >= 25 && fromcal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             //开始时间在十月最后一个周日
             if(fromcal.get(Calendar.HOUR_OF_DAY)==2 && tocal.get(Calendar.HOUR_OF_DAY)==2 && tocal.get(Calendar.HOUR_OF_DAY)<3 && tocal.get(Calendar.MINUTE)<=fromcal.get(Calendar.MINUTE)) {
                 //因为转换而出现通话时间为负的情况
@@ -69,7 +69,7 @@ public class PhoneFee {
 
     public double CountMoney(long time){
         double money = 0;
-        if(time <= 0|| time > 30){
+        if(time <= 0|| time > 30*60){
             money = -1.0; //返回负数表示报错
         }
         else if(time > 0 && time <=20){
@@ -82,14 +82,14 @@ public class PhoneFee {
     public static void main(String[] args) {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {
-            String fromtime1 = br.readLine();
-            String totime1 = br.readLine();
+            String time1 = br.readLine();
+            String time2 = br.readLine();
 
             SimpleDateFormat simplefomat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             PhoneFee p1 = new PhoneFee();
 
-            long minutes = p1.CountTime(fromtime1,totime1);
+            long minutes = p1.CountTime(time2,time1);
             double money = p1.CountMoney(minutes);
 
             System.out.println(money);
