@@ -10,14 +10,10 @@ import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PhoneFeeTest {
-    @DisplayName(value = "话费等价类测试1")
+    @DisplayName(value = "话费等价类测试")
     @ParameterizedTest
     @CsvFileSource(resources = "/话费等价类测试.csv", numLinesToSkip = 1, encoding = "UTF-8")
-    void main(String Date1, String Date2, double expected) throws ParseException {
-//        PhoneFee p1 = new PhoneFee();
-//        long CountTime1=p1.CountTime(fromDate,toDate);
-//        double money= p1.CountMoney(CountTime1);
-        SimpleDateFormat simplefomat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    void fileTest01(String Date1, String Date2, double expected) throws ParseException {
 
         PhoneFee p1 = new PhoneFee();
 
@@ -26,4 +22,29 @@ public class PhoneFeeTest {
         System.out.println("通话时间为："+minutes+"分钟");
         assertEquals(expected,money);
     }
+
+    @Test
+    @DisplayName(value="通话时间小于等于20分钟")
+    void fileTest02() throws ParseException {
+        PhoneFee p1 = new PhoneFee();
+        double money = p1.CountMoney(10);
+        assertEquals(0.5,money);
+    }
+
+    @Test
+    @DisplayName(value="通话时间大于20分钟")
+    void fileTest03() throws ParseException {
+        PhoneFee p1 = new PhoneFee();
+        double money = p1.CountMoney(25);
+        assertEquals(1.5,money);
+    }
+
+    @Test
+    @DisplayName(value="通话时间超过30个小时")
+    void fileTest04() throws ParseException {
+        PhoneFee p1 = new PhoneFee();
+        double money = p1.CountMoney(30*60+1);
+        assertEquals(-1.0,money);
+    }
+
 }
